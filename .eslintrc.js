@@ -44,4 +44,11 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-native/no-raw-text': 'off',
   },
+  settings: {
+    'import/resolver': {
+      'babel-plugin-root-import': {
+        rootPathSuffix: 'src'
+      },
+    },
+  },
 };
