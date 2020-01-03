@@ -28,7 +28,7 @@ export const Content = styled.div`
     }
 
     label {
-      margin: 10px 0;
+      margin: 20px 0 5px;
       text-align: left;
       text-transform: uppercase;
       font-weight: bold;
@@ -39,15 +39,23 @@ export const Content = styled.div`
     input {
       height: 44px;
       padding: 0 15px;
-      margin: 0 0 10px;
+      margin: 0;
       border: 1px solid #999999;
       border-radius: 4px;
       color: #999999;
     }
 
+    span {
+      color: #ee4d64;
+      align-self: flex-start;
+      margin-top: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
     button {
       height: 44px;
-      margin: 10px 0 0;
+      margin-top: 20px;
       background: #ee4d64;
       color: #fff;
       border: 0;
