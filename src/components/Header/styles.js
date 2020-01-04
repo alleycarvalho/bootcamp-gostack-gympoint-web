@@ -53,6 +53,7 @@ export const Content = styled.div`
 export const Profile = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: right;
 
   strong {
     font-size: 14px;
@@ -62,7 +63,6 @@ export const Profile = styled.div`
 
   button {
     color: #de3b3b;
-    text-align: right;
     border: 0;
     background: transparent;
 

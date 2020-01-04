@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 import logo from '~/assets/logo-header.svg';
@@ -6,6 +7,8 @@ import logo from '~/assets/logo-header.svg';
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
+  const user = useSelector(state => state.user);
+
   return (
     <Container>
       <Content>
@@ -35,7 +38,7 @@ export default function Header() {
 
         <aside>
           <Profile>
-            <strong>Alley M. Carvalho</strong>
+            <strong title={`${user.name} - ${user.email}`}>{user.name}</strong>
             <button type="button">Sair do Sistema</button>
           </Profile>
         </aside>
