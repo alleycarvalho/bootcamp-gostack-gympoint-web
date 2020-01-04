@@ -16,6 +16,13 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@auth/SIGN_OUT': {
+        draft.id = null;
+        draft.name = null;
+        draft.email = null;
+        break;
+      }
+
       default:
     }
   });
