@@ -4,11 +4,11 @@ import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
 import Title from '~/components/Title';
 
-export default function Dashboard() {
+export default function StudentList() {
   return (
     <Container>
       <HeaderPage>
-        <Title>Dashboard</Title>
+        <Title>Gerenciando Alunos</Title>
       </HeaderPage>
     </Container>
   );

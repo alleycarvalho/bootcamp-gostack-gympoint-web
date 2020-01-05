@@ -26,19 +26,19 @@ export default function Header() {
 
           <div className="separator" />
 
-          <NavLink to="/" activeClassName="selected">
+          <NavLink to="/students" activeClassName="selected">
             ALUNOS
           </NavLink>
 
-          <NavLink to="/" activeClassName="selected">
+          <NavLink to="/plans" activeClassName="selected">
             PLANOS
           </NavLink>
 
-          <NavLink to="/" activeClassName="selected">
+          <NavLink to="/enrollments" activeClassName="selected">
             MATRÍCULAS
           </NavLink>
 
-          <NavLink to="/" activeClassName="selected">
+          <NavLink to="/help-orders" activeClassName="selected">
             PEDIDOS DE AUXÍLIO
           </NavLink>
         </nav>
