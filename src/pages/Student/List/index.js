@@ -10,6 +10,9 @@ import Loading from '~/components/Loading';
 import NoResultsFound from '~/components/NoResultsFound';
 import { Panel } from '~/components/Panel/styles';
 import { Table, Thead, Th, Tbody, Tr, Td } from '~/components/Table';
+import { PaginationContainer } from '~/components/Pagination/Container/styles';
+import PaginationInfo from '~/components/Pagination/PaginationInfo';
+import Pagination from '~/components/Pagination';
 
 import { studentSearchRequest } from '~/store/modules/student/actions';
 
@@ -26,6 +29,10 @@ export default function StudentList() {
   function handleSearchMain(value, page = 1) {
     setTermSearch(value);
     dispatch(studentSearchRequest({ name: value, page }));
+  }
+
+  function handleLoadPage(page) {
+    handleSearchMain(termSearch, page);
   }
 
   return (
@@ -71,6 +78,24 @@ export default function StudentList() {
                       ))}
                     </Tbody>
                   </Table>
+
+                  <PaginationContainer>
+                    <PaginationInfo
+                      page={students.page}
+                      perPage={students.perPage}
+                      totalPage={students.totalPage}
+                      total={students.total}
+                    />
+
+                    {students.totalPage > 1 && (
+                      <Pagination
+                        page={students.page}
+                        totalPage={students.totalPage}
+                        align="center"
+                        onLoadPage={handleLoadPage}
+                      />
+                    )}
+                  </PaginationContainer>
                 </>
               )}
           </Panel>
