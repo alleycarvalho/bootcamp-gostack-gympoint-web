@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     total: 0,
     totalPage: 0,
   },
+  student: {},
   loading: false,
 };
 
@@ -21,6 +22,17 @@ export default function student(state = INITIAL_STATE, action) {
 
       case '@student/STUDENT_SEARCH_SUCCESS': {
         draft.students = action.payload.data;
+        draft.loading = false;
+        break;
+      }
+
+      case '@student/STUDENT_SAVE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+
+      case '@student/STUDENT_SAVE_SUCCESS': {
+        draft.student = action.payload.data;
         draft.loading = false;
         break;
       }

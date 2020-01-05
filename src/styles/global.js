@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import colors from './colors';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -38,5 +39,18 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin: -15px 0 15px;
+      font-size: 13px;
+      font-weight: bold;
+      color: ${colors.red};
+      align-self: flex-start;
+    }
   }
 `;

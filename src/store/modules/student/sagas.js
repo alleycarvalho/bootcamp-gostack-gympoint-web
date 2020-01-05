@@ -1,8 +1,13 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
+import history from '~/services/history';
 
-import { studentSearchSuccess, studentFailure } from './actions';
+import {
+  studentSearchSuccess,
+  studentSaveSuccess,
+  studentFailure,
+} from './actions';
 
 function* searchStudents({ payload }) {
   try {
@@ -23,6 +28,25 @@ function* searchStudents({ payload }) {
   }
 }
 
+function* addStudent(data) {
+  try {
+    const res = yield call(api.post, 'students', data);
+
+    toast.success('Cadastro realizado com sucesso');
+    yield put(studentSaveSuccess(res.data));
+
+    history.push('/students');
+  } catch (error) {
+    toast.error('Erro ao cadastrar');
+    yield put(studentFailure());
+  }
+}
+
+function* saveStudent({ payload }) {
+  yield addStudent(payload.data);
+}
+
 export default all([
   takeLatest('@student/STUDENT_SEARCH_REQUEST', searchStudents),
+  takeLatest('@student/STUDENT_SAVE_REQUEST', saveStudent),
 ]);

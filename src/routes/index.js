@@ -6,6 +6,7 @@ import SignIn from '~/pages/SignIn';
 
 import Dashboard from '~/pages/Dashboard';
 import StudentList from '~/pages/Student/List';
+import StudentForm from '~/pages/Student/Form';
 import PlanList from '~/pages/Plan/List';
 import EnrollmentList from '~/pages/Enrollment/List';
 import HelpOrderList from '~/pages/HelpOrder/List';
@@ -18,6 +19,7 @@ export default function Routes() {
       <Route path="/" exact component={Dashboard} isPrivate />
 
       <Route path="/students" exact component={StudentList} isPrivate />
+      <Route path="/students/new" component={StudentForm} isPrivate />
 
       <Route path="/plans" exact component={PlanList} isPrivate />
 
