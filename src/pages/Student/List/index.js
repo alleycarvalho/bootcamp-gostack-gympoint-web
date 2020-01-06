@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 
 import colors from '~/styles/colors';
+import Alert from '~/utils/alert';
 
 import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
 import Title from '~/components/Title';
 import { Controls } from '~/components/Controls/styles';
 import ButtonLink from '~/components/ButtonLink';
+import ButtonLikeLink from '~/components/ButtonLikeLink';
 import InputSearch from '~/components/InputSearch';
 import Loading from '~/components/Loading';
 import NoResultsFound from '~/components/NoResultsFound';
@@ -20,7 +22,10 @@ import { PaginationContainer } from '~/components/Pagination/Container/styles';
 import PaginationInfo from '~/components/Pagination/PaginationInfo';
 import Pagination from '~/components/Pagination';
 
-import { studentSearchRequest } from '~/store/modules/student/actions';
+import {
+  studentSearchRequest,
+  studentDeleteRequest,
+} from '~/store/modules/student/actions';
 
 export default function StudentList() {
   const [termSearch, setTermSearch] = useState('');
@@ -39,6 +44,14 @@ export default function StudentList() {
 
   function handleLoadPage(page) {
     handleSearchMain(termSearch, page);
+  }
+
+  function handleDelete(id) {
+    Alert.delete().then(result => {
+      if (result.value) {
+        dispatch(studentDeleteRequest(id));
+      }
+    });
   }
 
   return (
@@ -91,7 +104,14 @@ export default function StudentList() {
                               Editar
                         </Link>
                           </Td>
-                          <Td />
+                          <Td>
+                            <ButtonLikeLink
+                              style={{ color: colors.red }}
+                              onClick={() => handleDelete(student.id)}
+                            >
+                              Remover
+                        </ButtonLikeLink>
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>

@@ -6,6 +6,7 @@ import history from '~/services/history';
 import {
   studentSearchSuccess,
   studentSaveSuccess,
+  studentDeleteSuccess,
   studentFailure,
 } from './actions';
 
@@ -64,7 +65,22 @@ function* saveStudent({ payload }) {
   }
 }
 
+function* deleteStudent({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield call(api.delete, `students/${id}`);
+
+    toast.success('Removido com sucesso');
+    yield put(studentDeleteSuccess(id));
+  } catch (error) {
+    toast.error('Erro ao remover');
+    yield put(studentFailure());
+  }
+}
+
 export default all([
   takeLatest('@student/STUDENT_SEARCH_REQUEST', searchStudents),
   takeLatest('@student/STUDENT_SAVE_REQUEST', saveStudent),
+  takeLatest('@student/STUDENT_DELETE_REQUEST', deleteStudent),
 ]);

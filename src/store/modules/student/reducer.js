@@ -37,6 +37,19 @@ export default function student(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@student/STUDENT_DELETE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+
+      case '@student/STUDENT_DELETE_SUCCESS': {
+        draft.students.data = state.students.data.filter(
+          el => el.id !== action.id
+        );
+        draft.loading = false;
+        break;
+      }
+
       case '@student/STUDENT_FAILURE': {
         draft.loading = false;
         break;

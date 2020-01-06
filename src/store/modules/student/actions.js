@@ -26,6 +26,20 @@ export function studentSaveSuccess(data) {
   };
 }
 
+export function studentDeleteRequest(id) {
+  return {
+    type: '@student/STUDENT_DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function studentDeleteSuccess(id) {
+  return {
+    type: '@student/STUDENT_DELETE_SUCCESS',
+    id,
+  };
+}
+
 export function studentFailure() {
   return {
     type: '@student/STUDENT_FAILURE',
