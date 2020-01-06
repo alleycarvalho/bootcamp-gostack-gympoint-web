@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from '@rocketseat/unform';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import history from '~/services/history';
 
 import colors from '~/styles/colors';
 
@@ -20,6 +23,7 @@ import Input from '~/components/Input';
 import { FormGroup } from '~/components/FormGroup/styles';
 
 import { studentSaveRequest } from '~/store/modules/student/actions';
+import api from '~/services/api';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
@@ -42,16 +46,37 @@ const schema = Yup.object().shape({
 });
 
 export default function StudentForm() {
+  const { id } = useParams();
+  const [student, setStudent] = useState({});
   const dispath = useDispatch();
 
   function handleSubmit(data) {
-    dispath(studentSaveRequest({ ...data }));
+    dispath(studentSaveRequest({ ...data, id }));
   }
+
+  async function loadStudent() {
+    try {
+      const res = await api.get(`students/${id}`);
+
+      setStudent(res.data);
+    } catch (err) {
+      toast.error(`Registro (id: ${id}) não encontrado`);
+
+      history.push('/students');
+    }
+  }
+
+  useEffect(() => {
+    if (id) {
+      loadStudent();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <Container>
       <HeaderPage>
-        <Title>Cadastro de aluno</Title>
+        <Title>{id > 0 ? 'Edição de aluno' : 'Cadastro de aluno'}</Title>
 
         <Controls>
           <ButtonLink to="/students" color={colors.grey2}>
@@ -69,7 +94,14 @@ export default function StudentForm() {
       </HeaderPage>
 
       <Panel>
-        <Form id="formStudent" schema={schema} onSubmit={handleSubmit}>
+        <Form
+          id="formStudent"
+          initialData={student}
+          schema={schema}
+          onSubmit={handleSubmit}
+        >
+          <Input name="id" type="hidden" />
+
           <Label>NOME COMPLETO</Label>
           <Input name="name" placeholder="Digite seu nome completo" />
 

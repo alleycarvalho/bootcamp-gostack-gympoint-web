@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+
+import colors from '~/styles/colors';
 
 import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
@@ -80,7 +83,14 @@ export default function StudentList() {
                           <Td>{student.name}</Td>
                           <Td>{student.email}</Td>
                           <Td align="center">{student.age}</Td>
-                          <Td />
+                          <Td>
+                            <Link
+                              to={`/students/${student.id}/edit`}
+                              style={{ color: colors.blue }}
+                            >
+                              Editar
+                        </Link>
+                          </Td>
                           <Td />
                         </Tr>
                       ))}

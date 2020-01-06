@@ -42,8 +42,26 @@ function* addStudent(data) {
   }
 }
 
+function* updateStudent(data) {
+  try {
+    const res = yield call(api.put, `students/${data.id}`, data);
+
+    toast.success('Atualizado com sucesso');
+    yield put(studentSaveSuccess(res.data));
+  } catch (error) {
+    toast.error('Erro ao atualizar');
+    yield put(studentFailure());
+  }
+}
+
 function* saveStudent({ payload }) {
-  yield addStudent(payload.data);
+  const { id } = payload.data;
+
+  if (id) {
+    yield updateStudent(payload.data);
+  } else {
+    yield addStudent(payload.data);
+  }
 }
 
 export default all([

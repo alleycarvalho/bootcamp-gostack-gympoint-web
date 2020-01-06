@@ -20,6 +20,7 @@ export default function Routes() {
 
       <Route path="/students" exact component={StudentList} isPrivate />
       <Route path="/students/new" component={StudentForm} isPrivate />
+      <Route path="/students/:id/edit" component={StudentForm} isPrivate />
 
       <Route path="/plans" exact component={PlanList} isPrivate />
 
