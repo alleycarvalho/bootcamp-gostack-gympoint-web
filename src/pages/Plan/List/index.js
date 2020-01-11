@@ -10,6 +10,9 @@ import Loading from '~/components/Loading';
 import NoResultsFound from '~/components/NoResultsFound';
 import { Panel } from '~/components/Panel/styles';
 import { Table, Thead, Th, Tbody, Tr, Td } from '~/components/Table';
+import { PaginationContainer } from '~/components/Pagination/Container/styles';
+import PaginationInfo from '~/components/Pagination/PaginationInfo';
+import Pagination from '~/components/Pagination';
 
 import { planSearchRequest } from '~/store/modules/plan/actions';
 
@@ -26,6 +29,10 @@ export default function PlanList() {
   function handleSearchMain(value, page = 1) {
     setTermSearch(value);
     dispatch(planSearchRequest({ title: value, page }));
+  }
+
+  function handleLoadPage(page) {
+    handleSearchMain(termSearch, page);
   }
 
   return (
@@ -71,6 +78,24 @@ export default function PlanList() {
                       ))}
                     </Tbody>
                   </Table>
+
+                  <PaginationContainer>
+                    <PaginationInfo
+                      page={plans.page}
+                      perPage={plans.perPage}
+                      totalPage={plans.totalPage}
+                      total={plans.total}
+                    />
+
+                    {plans.totalPage > 1 && (
+                      <Pagination
+                        page={plans.page}
+                        totalPage={plans.totalPage}
+                        align="center"
+                        onLoadPage={handleLoadPage}
+                      />
+                    )}
+                  </PaginationContainer>
                 </>
               )}
           </Panel>
