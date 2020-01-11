@@ -60,8 +60,8 @@ export default function PlanList() {
                     <Thead>
                       <Tr>
                         <Th>TÍTULO</Th>
-                        <Th align="center">DURAÇÃO</Th>
-                        <Th align="center">VALOR p/ MÊS</Th>
+                        <Th>DURAÇÃO</Th>
+                        <Th>VALOR p/ MÊS</Th>
                         <Th colSpan="2" />
                       </Tr>
                     </Thead>
@@ -70,8 +70,8 @@ export default function PlanList() {
                       {plans.data.map(plan => (
                         <Tr key={String(plan.id)}>
                           <Td>{plan.title}</Td>
-                          <Td align="center">{plan.duration}</Td>
-                          <Td align="center">{plan.price}</Td>
+                          <Td>{`${plan.duration} ${plan.monthString}`}</Td>
+                          <Td>{plan.priceFormatted}</Td>
                           <Td />
                           <Td />
                         </Tr>
