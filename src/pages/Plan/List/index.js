@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { MdAdd } from 'react-icons/md';
+
 import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
 import Title from '~/components/Title';
 import { Controls } from '~/components/Controls/styles';
+import ButtonLink from '~/components/ButtonLink';
 import InputSearch from '~/components/InputSearch';
 import Loading from '~/components/Loading';
 import NoResultsFound from '~/components/NoResultsFound';
@@ -41,6 +44,11 @@ export default function PlanList() {
         <Title>Gerenciando Planos</Title>
 
         <Controls>
+          <ButtonLink to="/plans/new" title="Adicionar novo plano">
+            <MdAdd size={20} />
+            <span>Cadastrar</span>
+          </ButtonLink>
+
           <InputSearch
             handleSearch={handleSearchMain}
             placeholder="Buscar plano"
@@ -60,8 +68,8 @@ export default function PlanList() {
                     <Thead>
                       <Tr>
                         <Th>TÍTULO</Th>
-                        <Th>DURAÇÃO</Th>
-                        <Th>VALOR p/ MÊS</Th>
+                        <Th align="center">DURAÇÃO</Th>
+                        <Th align="center">VALOR p/ MÊS</Th>
                         <Th colSpan="2" />
                       </Tr>
                     </Thead>
@@ -70,8 +78,8 @@ export default function PlanList() {
                       {plans.data.map(plan => (
                         <Tr key={String(plan.id)}>
                           <Td>{plan.title}</Td>
-                          <Td>{`${plan.duration} ${plan.monthString}`}</Td>
-                          <Td>{plan.priceFormatted}</Td>
+                          <Td align="center">{`${plan.duration} ${plan.monthString}`}</Td>
+                          <Td align="center">{plan.priceFormatted}</Td>
                           <Td />
                           <Td />
                         </Tr>

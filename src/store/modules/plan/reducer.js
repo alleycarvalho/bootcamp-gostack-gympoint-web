@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     total: 0,
     totalPage: 0,
   },
+  plan: {},
   loading: false,
 };
 
@@ -25,7 +26,18 @@ export default function plan(state = INITIAL_STATE, action) {
         break;
       }
 
-      case '@student/PLAN_FAILURE': {
+      case '@plan/PLAN_SAVE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+
+      case '@plan/PLAN_SAVE_SUCCESS': {
+        draft.plan = action.payload.data;
+        draft.loading = false;
+        break;
+      }
+
+      case '@plan/PLAN_FAILURE': {
         draft.loading = false;
         break;
       }

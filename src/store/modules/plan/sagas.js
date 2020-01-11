@@ -1,10 +1,11 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
+import history from '~/services/history';
 
-import { formatCurrencyBR } from '~/utils';
+import { formatCurrency, formatCurrencyBR } from '~/utils';
 
-import { planSearchSuccess, planFailure } from './actions';
+import { planSearchSuccess, planSaveSuccess, planFailure } from './actions';
 
 function* searchPlans({ payload }) {
   try {
@@ -31,4 +32,27 @@ function* searchPlans({ payload }) {
   }
 }
 
-export default all([takeLatest('@plan/PLAN_SEARCH_REQUEST', searchPlans)]);
+function* addPlan(data) {
+  try {
+    const dataFormatted = { ...data, price: formatCurrency(data.price) };
+
+    const res = yield call(api.post, 'plans', dataFormatted);
+
+    toast.success('Cadastro realizado com sucesso');
+    yield put(planSaveSuccess(res.data));
+
+    history.push('/plans');
+  } catch (error) {
+    toast.error('Erro ao cadastrar');
+    yield put(planFailure());
+  }
+}
+
+function* savePlan({ payload }) {
+  yield addPlan(payload.data);
+}
+
+export default all([
+  takeLatest('@plan/PLAN_SEARCH_REQUEST', searchPlans),
+  takeLatest('@plan/PLAN_SAVE_REQUEST', savePlan),
+]);
