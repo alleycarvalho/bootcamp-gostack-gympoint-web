@@ -48,8 +48,28 @@ function* addPlan(data) {
   }
 }
 
+function* updatePlan(data) {
+  try {
+    const dataFormatted = { ...data, price: formatCurrency(data.price) };
+
+    const res = yield call(api.put, `plans/${dataFormatted.id}`, dataFormatted);
+
+    toast.success('Atualizado com sucesso');
+    yield put(planSaveSuccess(res.data));
+  } catch (error) {
+    toast.error('Erro ao atualizar');
+    yield put(planFailure());
+  }
+}
+
 function* savePlan({ payload }) {
-  yield addPlan(payload.data);
+  const { id } = payload.data;
+
+  if (id) {
+    yield updatePlan(payload.data);
+  } else {
+    yield addPlan(payload.data);
+  }
 }
 
 export default all([

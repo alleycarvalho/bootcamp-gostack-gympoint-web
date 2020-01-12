@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+
+import colors from '~/styles/colors';
 
 import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
@@ -80,7 +83,14 @@ export default function PlanList() {
                           <Td>{plan.title}</Td>
                           <Td align="center">{`${plan.duration} ${plan.monthString}`}</Td>
                           <Td align="center">{plan.priceFormatted}</Td>
-                          <Td />
+                          <Td>
+                            <Link
+                              to={`/plans/${plan.id}/edit`}
+                              style={{ color: colors.blue }}
+                            >
+                              Editar
+                        </Link>
+                          </Td>
                           <Td />
                         </Tr>
                       ))}

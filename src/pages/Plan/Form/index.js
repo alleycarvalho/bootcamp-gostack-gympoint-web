@@ -1,9 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Form } from '@rocketseat/unform';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+
+import api from '~/services/api';
+import history from '~/services/history';
 
 import colors from '~/styles/colors';
 
@@ -36,6 +41,7 @@ const schema = Yup.object().shape({
 });
 
 export default function PlanForm() {
+  const { id } = useParams();
   const [plan, setPlan] = useState({});
   const dispath = useDispatch();
 
@@ -47,16 +53,39 @@ export default function PlanForm() {
     }
 
     return formatCurrencyBR(total);
-  }, [plan.duration, plan.price]);
+  }, [plan]);
 
   function handleSubmit(data) {
-    dispath(planSaveRequest({ ...data }));
+    dispath(planSaveRequest({ ...data, id }));
   }
+
+  async function loadPlan() {
+    try {
+      const res = await api.get(`plans/${id}`);
+      const { data } = res;
+
+      setPlan({
+        ...data,
+        price: formatCurrencyBR(data.price, false),
+      });
+    } catch (err) {
+      toast.error(`Registro (id: ${id}) não encontrado`);
+
+      history.push('/plans');
+    }
+  }
+
+  useEffect(() => {
+    if (id) {
+      loadPlan();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <Container>
       <HeaderPage>
-        <Title>Cadastro de plano</Title>
+        <Title>{id > 0 ? 'Edição de plano' : 'Cadastro de plano'}</Title>
 
         <Controls>
           <ButtonLink to="/plans" color={colors.grey2}>
@@ -80,6 +109,8 @@ export default function PlanForm() {
           schema={schema}
           onSubmit={handleSubmit}
         >
+          <Input name="id" type="hidden" />
+
           <Label>TÍTULO DO PLANO</Label>
           <Input
             name="title"

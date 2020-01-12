@@ -25,6 +25,7 @@ export default function Routes() {
 
       <Route path="/plans" exact component={PlanList} isPrivate />
       <Route path="/plans/new" component={PlanForm} isPrivate />
+      <Route path="/plans/:id/edit" component={PlanForm} isPrivate />
 
       <Route path="/enrollments" exact component={EnrollmentList} isPrivate />
 

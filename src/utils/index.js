@@ -5,7 +5,8 @@ export const formatCurrency = value => {
   const index = value.lastIndexOf(',');
   const first = `${value.substr(0, index).replace(/,/g, '')}`;
   const decimal = `${value.substr(index).replace(',', '.')}`;
-  const currency = Number(`${first}${decimal}`);
+
+  const currency = index > 0 ? Number(`${first}${decimal}`) : value;
 
   return currency;
 };
