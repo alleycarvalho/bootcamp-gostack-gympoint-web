@@ -5,7 +5,12 @@ import history from '~/services/history';
 
 import { formatCurrency, formatCurrencyBR } from '~/utils';
 
-import { planSearchSuccess, planSaveSuccess, planFailure } from './actions';
+import {
+  planSearchSuccess,
+  planSaveSuccess,
+  planDeleteSuccess,
+  planFailure,
+} from './actions';
 
 function* searchPlans({ payload }) {
   try {
@@ -72,7 +77,22 @@ function* savePlan({ payload }) {
   }
 }
 
+function* deletePlan({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield call(api.delete, `plans/${id}`);
+
+    toast.success('Registro removido com sucesso');
+    yield put(planDeleteSuccess(id));
+  } catch (error) {
+    toast.error('Erro ao remover registro');
+    yield put(planFailure());
+  }
+}
+
 export default all([
   takeLatest('@plan/PLAN_SEARCH_REQUEST', searchPlans),
   takeLatest('@plan/PLAN_SAVE_REQUEST', savePlan),
+  takeLatest('@plan/PLAN_DELETE_REQUEST', deletePlan),
 ]);

@@ -96,7 +96,7 @@ export default function StudentList() {
                           <Td>{student.name}</Td>
                           <Td>{student.email}</Td>
                           <Td align="center">{student.age}</Td>
-                          <Td>
+                          <Td align="center" width="50">
                             <Link
                               to={`/students/${student.id}/edit`}
                               style={{ color: colors.blue }}
@@ -104,7 +104,7 @@ export default function StudentList() {
                               Editar
                         </Link>
                           </Td>
-                          <Td>
+                          <Td align="center" width="70">
                             <ButtonLikeLink
                               style={{ color: colors.red }}
                               onClick={() => handleDelete(student.id)}

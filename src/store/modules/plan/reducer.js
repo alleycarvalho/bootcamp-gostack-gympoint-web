@@ -37,6 +37,17 @@ export default function plan(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@plan/PLAN_DELETE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+
+      case '@plan/PLAN_DELETE_SUCCESS': {
+        draft.plans.data = state.plans.data.filter(el => el.id !== action.id);
+        draft.loading = false;
+        break;
+      }
+
       case '@plan/PLAN_FAILURE': {
         draft.loading = false;
         break;

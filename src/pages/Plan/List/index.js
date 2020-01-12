@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 
 import colors from '~/styles/colors';
+import Alert from '~/utils/alert';
 
 import { Container } from '~/components/Grid';
 import { HeaderPage } from '~/components/HeaderPage/styles';
 import Title from '~/components/Title';
 import { Controls } from '~/components/Controls/styles';
 import ButtonLink from '~/components/ButtonLink';
+import ButtonLikeLink from '~/components/ButtonLikeLink';
 import InputSearch from '~/components/InputSearch';
 import Loading from '~/components/Loading';
 import NoResultsFound from '~/components/NoResultsFound';
@@ -20,7 +22,10 @@ import { PaginationContainer } from '~/components/Pagination/Container/styles';
 import PaginationInfo from '~/components/Pagination/PaginationInfo';
 import Pagination from '~/components/Pagination';
 
-import { planSearchRequest } from '~/store/modules/plan/actions';
+import {
+  planSearchRequest,
+  planDeleteRequest,
+} from '~/store/modules/plan/actions';
 
 export default function PlanList() {
   const [termSearch, setTermSearch] = useState('');
@@ -39,6 +44,14 @@ export default function PlanList() {
 
   function handleLoadPage(page) {
     handleSearchMain(termSearch, page);
+  }
+
+  function handleDelete(id) {
+    Alert.delete().then(result => {
+      if (result.value) {
+        dispatch(planDeleteRequest(id));
+      }
+    });
   }
 
   return (
@@ -83,7 +96,7 @@ export default function PlanList() {
                           <Td>{plan.title}</Td>
                           <Td align="center">{`${plan.duration} ${plan.monthString}`}</Td>
                           <Td align="center">{plan.priceFormatted}</Td>
-                          <Td>
+                          <Td align="center" width="50">
                             <Link
                               to={`/plans/${plan.id}/edit`}
                               style={{ color: colors.blue }}
@@ -91,7 +104,14 @@ export default function PlanList() {
                               Editar
                         </Link>
                           </Td>
-                          <Td />
+                          <Td align="center" width="70">
+                            <ButtonLikeLink
+                              style={{ color: colors.red }}
+                              onClick={() => handleDelete(plan.id)}
+                            >
+                              Remover
+                        </ButtonLikeLink>
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>
