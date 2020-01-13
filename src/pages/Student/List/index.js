@@ -75,69 +75,69 @@ export default function StudentList() {
       {loading ? (
         <Loading>Carregando...</Loading>
       ) : (
-          <Panel>
-            {students.total === 0 ? (
-              <NoResultsFound />
-            ) : (
-                <>
-                  <Table>
-                    <Thead>
-                      <Tr>
-                        <Th>NOME</Th>
-                        <Th>EMAIL</Th>
-                        <Th align="center">IDADE</Th>
-                        <Th colSpan="2" />
-                      </Tr>
-                    </Thead>
+        <Panel>
+          {students.total === 0 ? (
+            <NoResultsFound />
+          ) : (
+            <>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>NOME</Th>
+                    <Th>EMAIL</Th>
+                    <Th align="center">IDADE</Th>
+                    <Th colSpan="2" />
+                  </Tr>
+                </Thead>
 
-                    <Tbody>
-                      {students.data.map(student => (
-                        <Tr key={String(student.id)}>
-                          <Td>{student.name}</Td>
-                          <Td>{student.email}</Td>
-                          <Td align="center">{student.age}</Td>
-                          <Td align="center" width="50">
-                            <Link
-                              to={`/students/${student.id}/edit`}
-                              style={{ color: colors.blue }}
-                            >
-                              Editar
+                <Tbody>
+                  {students.data.map(student => (
+                    <Tr key={String(student.id)}>
+                      <Td>{student.name}</Td>
+                      <Td>{student.email}</Td>
+                      <Td align="center">{student.age}</Td>
+                      <Td align="center" width="50">
+                        <Link
+                          to={`/students/${student.id}/edit`}
+                          style={{ color: colors.blue }}
+                        >
+                          Editar
                         </Link>
-                          </Td>
-                          <Td align="center" width="70">
-                            <ButtonLikeLink
-                              style={{ color: colors.red }}
-                              onClick={() => handleDelete(student.id)}
-                            >
-                              Remover
+                      </Td>
+                      <Td align="center" width="70">
+                        <ButtonLikeLink
+                          style={{ color: colors.red }}
+                          onClick={() => handleDelete(student.id)}
+                        >
+                          Remover
                         </ButtonLikeLink>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
 
-                  <PaginationContainer>
-                    <PaginationInfo
-                      page={students.page}
-                      perPage={students.perPage}
-                      totalPage={students.totalPage}
-                      total={students.total}
-                    />
+              <PaginationContainer>
+                <PaginationInfo
+                  page={students.page}
+                  perPage={students.perPage}
+                  totalPage={students.totalPage}
+                  total={students.total}
+                />
 
-                    {students.totalPage > 1 && (
-                      <Pagination
-                        page={students.page}
-                        totalPage={students.totalPage}
-                        align="center"
-                        onLoadPage={handleLoadPage}
-                      />
-                    )}
-                  </PaginationContainer>
-                </>
-              )}
-          </Panel>
-        )}
+                {students.totalPage > 1 && (
+                  <Pagination
+                    page={students.page}
+                    totalPage={students.totalPage}
+                    align="center"
+                    onLoadPage={handleLoadPage}
+                  />
+                )}
+              </PaginationContainer>
+            </>
+          )}
+        </Panel>
+      )}
     </Container>
   );
 }

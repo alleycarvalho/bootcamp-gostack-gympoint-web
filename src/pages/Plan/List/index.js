@@ -75,69 +75,69 @@ export default function PlanList() {
       {loading ? (
         <Loading>Carregando...</Loading>
       ) : (
-          <Panel>
-            {plans.total === 0 ? (
-              <NoResultsFound />
-            ) : (
-                <>
-                  <Table>
-                    <Thead>
-                      <Tr>
-                        <Th>TÍTULO</Th>
-                        <Th align="center">DURAÇÃO</Th>
-                        <Th align="center">VALOR p/ MÊS</Th>
-                        <Th colSpan="2" />
-                      </Tr>
-                    </Thead>
+        <Panel>
+          {plans.total === 0 ? (
+            <NoResultsFound />
+          ) : (
+            <>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>TÍTULO</Th>
+                    <Th align="center">DURAÇÃO</Th>
+                    <Th align="center">VALOR p/ MÊS</Th>
+                    <Th colSpan="2" />
+                  </Tr>
+                </Thead>
 
-                    <Tbody>
-                      {plans.data.map(plan => (
-                        <Tr key={String(plan.id)}>
-                          <Td>{plan.title}</Td>
-                          <Td align="center">{`${plan.duration} ${plan.monthString}`}</Td>
-                          <Td align="center">{plan.priceFormatted}</Td>
-                          <Td align="center" width="50">
-                            <Link
-                              to={`/plans/${plan.id}/edit`}
-                              style={{ color: colors.blue }}
-                            >
-                              Editar
+                <Tbody>
+                  {plans.data.map(plan => (
+                    <Tr key={String(plan.id)}>
+                      <Td>{plan.title}</Td>
+                      <Td align="center">{`${plan.duration} ${plan.monthString}`}</Td>
+                      <Td align="center">{plan.priceFormatted}</Td>
+                      <Td align="center" width="50">
+                        <Link
+                          to={`/plans/${plan.id}/edit`}
+                          style={{ color: colors.blue }}
+                        >
+                          Editar
                         </Link>
-                          </Td>
-                          <Td align="center" width="70">
-                            <ButtonLikeLink
-                              style={{ color: colors.red }}
-                              onClick={() => handleDelete(plan.id)}
-                            >
-                              Remover
+                      </Td>
+                      <Td align="center" width="70">
+                        <ButtonLikeLink
+                          style={{ color: colors.red }}
+                          onClick={() => handleDelete(plan.id)}
+                        >
+                          Remover
                         </ButtonLikeLink>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
 
-                  <PaginationContainer>
-                    <PaginationInfo
-                      page={plans.page}
-                      perPage={plans.perPage}
-                      totalPage={plans.totalPage}
-                      total={plans.total}
-                    />
+              <PaginationContainer>
+                <PaginationInfo
+                  page={plans.page}
+                  perPage={plans.perPage}
+                  totalPage={plans.totalPage}
+                  total={plans.total}
+                />
 
-                    {plans.totalPage > 1 && (
-                      <Pagination
-                        page={plans.page}
-                        totalPage={plans.totalPage}
-                        align="center"
-                        onLoadPage={handleLoadPage}
-                      />
-                    )}
-                  </PaginationContainer>
-                </>
-              )}
-          </Panel>
-        )}
+                {plans.totalPage > 1 && (
+                  <Pagination
+                    page={plans.page}
+                    totalPage={plans.totalPage}
+                    align="center"
+                    onLoadPage={handleLoadPage}
+                  />
+                )}
+              </PaginationContainer>
+            </>
+          )}
+        </Panel>
+      )}
     </Container>
   );
 }
